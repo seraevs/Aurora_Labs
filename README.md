@@ -40,9 +40,9 @@
 	Docker Compose is a tool for defining and running multi-container Docker applications. 
 	It allows to define the services that make up application in a single file, 
 	and then use a single command to start, stop and manage all of the services.
-## docker archived to storage folder 
+## Docker archived to storage folder 
 	/scripts/scripts_labs_1_0_0_1.tar
-## for run the created docker from my file need run the command:
+## For run the created docker from my file need run the command:
 	cd /scripts
 	docker load --input scripts_labs_1_0_0_1.tar
  
