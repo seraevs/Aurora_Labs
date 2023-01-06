@@ -1,0 +1,50 @@
+pipeline 
+{
+	  agent 
+		{
+			node
+			{
+				label 'HQDEVCODE01'
+			}
+		}
+
+ environment{
+				JENKINS_PATH='/jenkins/workspace'
+				GIT_PATH='http://username:password@xx.xx.xx.xx/labs/labs.git'	
+			}
+	stages{
+		stage('Git_Clone') {
+			steps {		
+			sh '''
+				echo ========== The begin clonning git stage ===========
+				if [ d ${JENKINS_PATH}/labs ]
+				then
+					rm -rf ${JENKINS_PATH}/labs
+				fi
+				cd ${JENKINS_PATH}
+				git clone -b develop --single-branch ${GIT_PATH}
+				echo finished clonning git!!!
+				echo ======= The END finished clonning git stage =======
+			'''
+			}
+		}
+
+		stage('Build_docker') {
+			steps {		
+			sh '''
+				echo ========== The begin build docker stage ===========
+				cd ${JENKINS_PATH}/labs/scripts
+				## go to build and run new docker image from docker-compose.yml
+				docker-compose up --build
+				## create docker tag
+				docker tag test_labs localhost:5000/scripts_labs:1.0.0.1
+				## insert docker to docker registry
+				docker push localhost:5000/scripts_labs:1.0.0.1
+				## save docker to zip folder on storage
+				docker save test_labs > scripts_labs_1_0_0_1.tar
+				echo ======= The END finished build docker stage =======
+			'''
+			}
+		}
+	}
+}
