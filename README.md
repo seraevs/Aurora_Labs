@@ -46,7 +46,7 @@
 	cd /scripts
 	docker load --input scripts_labs_1_0_0_1.tar
  
-## Needs doccer-engine installed:
+## Needs docker-engine installed:
 	Docker Engine is the core component of Docker, 
 	a containerization platform that allows to package, 
 	deploy, and run applications in containers
